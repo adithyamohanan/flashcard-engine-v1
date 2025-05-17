@@ -1,6 +1,7 @@
 import './Hero.css';
 import Logo from '../../assets/FlashFlow.png';
 import Arrow from '../../assets/arrow.png';
+import Idea from '../../assets/idea.png';
 
 function Hero() {
     const scrollToSection = () => {
@@ -11,17 +12,21 @@ function Hero() {
     };
 
     return (
-
         <div className="hero">
+            <div className="w-full sm:w-[80%] mx-auto flex flex-col sm:flex-row items-start">
 
+                
+                <div className="flex-1 relative flex flex-col justify-start items-start gap-50">
+                    
+                   
+                    <div className="text-white mb-4 flex items-center gap-2">
+                        <img src={Idea} alt='Idea' className='w-10'/>
+                        <h2 className="text-xl font-semibold">Effortless learning starts here.</h2>
+                    </div>
 
-            <div className="w-full sm:w-[80%] mx-auto flex flex-col sm:flex-row gap-8 items-center">
-
-
-
-                <div className="flex-1 flex">
-                    <div className="scroll-circle" onClick={scrollToSection}>
-                        <svg viewBox="0 0 100 100">
+                    
+                    <div className="scroll-circle cursor-pointer" onClick={scrollToSection}>
+                        <svg className='svg1' viewBox="0 0 100 100">
                             <defs>
                                 <path
                                     id="circlePath"
@@ -38,13 +43,11 @@ function Hero() {
                     </div>
                 </div>
 
-
+               
                 <div className="flex-1 text-lg">
                     <img src={Logo} alt="Logo" className="mx-auto" />
-
-
-                    <div className="paragraph-container text-white">
-                        <p className="mb-4">
+                    <div className="paragraph-container text-white font-semibold">
+                        <p className="mb-4 ">
                             Master anything faster with smart, science-backed flashcards.
                         </p>
                         <p>
@@ -55,7 +58,6 @@ function Hero() {
 
             </div>
         </div>
-
     );
 }
 
