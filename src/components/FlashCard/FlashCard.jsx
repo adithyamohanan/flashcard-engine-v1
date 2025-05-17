@@ -32,8 +32,7 @@ function FlashCard() {
                         <div className="max-w-2xl h-64 bg-yellow-200 rounded-2xl shadow-lg p-6 text-2xl grid grid-cols-2">
 
                             <p className="text-black-600 mb-4">Cards Due Today</p>
-                            <p className="text-black-600 flex items-start justify-end">5 Remaining</p>
-
+                            <p className="text-black-600 flex items-start justify-end">5 Remainin C</p>
 
                         </div>
                     </div>
