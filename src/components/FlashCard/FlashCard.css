@@ -25,7 +25,7 @@
     transition: transform 0.3s;
 }
 
-/* Manually place cards near the curve */
+
 .card1:nth-child(2) {
     top: 20px;
     left: 50%;
@@ -102,26 +102,12 @@
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
 }
 
-.flip-card-front {
-    background: linear-gradient(135deg,
-            rgba(190, 219, 255, 0.15) 0%,
-            rgba(255, 255, 255, 0.05) 100%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(190, 219, 255, 0.2);
-}
+
 
 .flip-card-back {
 
-    /* Tailwind green-400 */
+    
     transform: rotateY(180deg);
-    background: linear-gradient(135deg,
-            rgba(186, 3, 210, 0.15) 0%,
-            rgba(207, 10, 148, 0.197) 100%);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    box-shadow: 0 4px 30px rgba(190, 219, 255, 0.2);
+    
 }
 

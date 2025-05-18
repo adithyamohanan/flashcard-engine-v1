@@ -4,6 +4,10 @@ import DoughnutChart from './DoughnutChart/DoughnutChart';
 import LineChart from './LineChart/LineChart';
 import Trophy from '../../assets/trophy.png';
 import Vlogger from '../../assets/vlogger.gif';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+import { useState } from 'react'; 
 
 import {
     Layers,
@@ -15,21 +19,38 @@ import {
 
 function DashBoard() {
 
+    const [totalCards, setTotalCards] = useState(0);
+
+    useEffect(() => {
+        const savedCards = localStorage.getItem('flashcards');
+        if (savedCards) {
+            const parsedCards = JSON.parse(savedCards);
+            setTotalCards(parsedCards.length);
+        }
+    }, []);
+
+    useEffect(() => {
+        AOS.init({
+            duration: 1000, 
+            once: true,    
+        });
+    }, []);
+
     return (
         <>
-            <div className="w-[80%] mx-auto my-6" id='dashboard'>
+            <div data-aos="fade-up" className="w-[80%] mx-auto my-6" id='dashboard'>
                 <h1 className="text-white text-center text-5xl font-extrabold" id='dashboard'>Track Your Progress</h1>
                 <img src={Line} alt="Line" className="w-70 h-auto mx-auto" />
             </div>
 
-            <div className="w-[80%] mx-auto my-10">
+            <div data-aos="fade-up" className="w-[80%] mx-auto my-10">
                 <div className="grid grid-cols-3 gap-2">
 
-                      <div className="col-span-1">
+                    <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-3">
-                            
+
                             <img
-                                src={Vlogger} 
+                                src={Vlogger}
                                 alt="Welcome GIF"
                                 className="w-16 h-16 rounded-full"
                             />
@@ -37,7 +58,7 @@ function DashBoard() {
                         </div>
                     </div>
 
-                    {/* My Progress */}
+                    
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex items-center justify-center gap-10">
                             <p className='text-white'>My Progress</p>
@@ -45,18 +66,18 @@ function DashBoard() {
                         </div>
                     </div>
 
-                  
 
-                    {/* Total Flashcards */}
+
+                    
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <Layers className="text-white w-8 h-8 hover:scale-105 transition-transform" />
                             <p className="text-white text-center text-lg font-medium">Total FlashCards</p>
-                            <p className="text-white text-6xl font-bold">6</p>
+                            <p className="text-white text-6xl font-bold">{totalCards}</p>
                         </div>
                     </div>
 
-                    {/* Cards Due Today */}
+                    
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <Clock className="text-white w-8 h-8 hover:scale-105 transition-transform" />
@@ -65,7 +86,7 @@ function DashBoard() {
                         </div>
                     </div>
 
-                    {/* Cards Mastered */}
+                    
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <CheckCircle className="text-white w-8 h-8 hover:scale-105 transition-transform" />
@@ -74,7 +95,7 @@ function DashBoard() {
                         </div>
                     </div>
 
-                    {/* Days Streak */}
+                    
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <Flame className="text-white w-8 h-8 hover:scale-105 transition-transform" />
@@ -83,7 +104,7 @@ function DashBoard() {
                         </div>
                     </div>
 
-                    {/* Progress Line Chart */}
+                    
                     <div className="col-span-2">
                         <div className="w-full h-full dashcard">
                             <div className='w-full'>
@@ -92,7 +113,7 @@ function DashBoard() {
                         </div>
                     </div>
 
-                    {/* Milestone */}
+                    
                     <div className="col-span-1">
                         <div className="w-full h-full dashcard">
                             <div className='mt-4'>

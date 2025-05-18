@@ -9,3 +9,15 @@
   -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.2); 
 }
+
+.navbar {
+  transition: transform 0.3s ease-in-out;
+}
+
+.navbar--hide {
+  transform: translateY(-120%);
+}
+
+.navbar--show {
+  transform: translateY(0);
+}

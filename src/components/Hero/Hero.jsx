@@ -3,8 +3,19 @@ import Logo from '../../assets/FlashFlow.png';
 import Arrow from '../../assets/arrow.png';
 import Idea from '../../assets/idea.png';
 import { Link } from 'react-scroll';
+import React, { useEffect } from 'react';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 function Hero() {
+
+     useEffect(() => {
+    AOS.init({
+      duration: 1000, 
+      once: true,     
+    });
+  }, []);
+
     const scrollToSection = () => {
         const section = document.getElementById("next-section");
         if (section) {
@@ -20,13 +31,13 @@ function Hero() {
                 <div className="flex-1 relative flex flex-col justify-start items-start gap-50">
                     
                    
-                    <div className="text-white mb-4 flex items-center gap-2">
+                    <div data-aos="fade-right" className="text-white mb-4 flex items-center gap-2">
                         <img src={Idea} alt='Idea' className='w-10'/>
                         <h2 className="text-xl font-semibold">Effortless learning starts here.</h2>
                     </div>
 
                     
-                    <div className="scroll-circle cursor-pointer" onClick={scrollToSection}>
+                    <div data-aos="fade-right" className="scroll-circle cursor-pointer" onClick={scrollToSection}>
                         <Link to='flash-v1' smooth={true} duration={500}>
                         <svg className='svg1' viewBox="0 0 100 100">
                             <defs>
@@ -47,7 +58,7 @@ function Hero() {
                 </div>
 
                
-                <div className="flex-1 text-lg">
+                <div data-aos="fade-left" className="flex-1 text-lg">
                     <img src={Logo} alt="Logo" className="mx-auto" />
                     <div className="paragraph-container text-white font-semibold">
                         <p className="mb-4 ">
