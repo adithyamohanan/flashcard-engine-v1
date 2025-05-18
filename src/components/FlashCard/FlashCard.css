@@ -1,12 +1,15 @@
 .card {
-
-    background: linear-gradient(135deg,
-            rgba(152, 10, 177, 0.15) 0%,
-            rgba(152, 10, 177, 0.15) 100%);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: linear-gradient(
+        135deg,
+        rgba(190, 219, 255, 0.15) 0%,
+        rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
     border: 1px solid rgba(255, 255, 255, 0.2);
+    box-shadow: 0 4px 30px rgba(190, 219, 255, 0.2);
 }
+
 
 .curve-container {
     position: relative;

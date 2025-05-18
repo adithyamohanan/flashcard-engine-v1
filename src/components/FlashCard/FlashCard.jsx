@@ -35,18 +35,18 @@ function FlashCard() {
 
                             <div className="absolute top-4 left-4 w-2 h-2 bg-green-500 rounded-full animate-ping"></div>
 
-                            <p className="text-black-600 mb-4">What is the capital of France?</p>
+                            <p className="text-black-600 font-semibold mb-4">What is the capital of France?</p>
 
                         </div>
 
-                        <div className='mx-auto flex flex-row gap-4 mt-4'>
+                        <div className='mx-auto flex flex-row gap-4 mt-10'>
 
                             <button className="mx-auto flex items-center gap-2 w-40 h-12 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 shadow-md">
                                 <img src={Cancel} alt="False" className='w-5 h-5' />
                                 I Don't Know
                             </button>
 
-                            <button className="mx-auto flex items-center gap-2 w-40 h-12 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 shadow-md">
+                            <button className="mx-auto flex items-center gap-5 w-40 h-12 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 shadow-md">
                                 <img src={CheckMark} alt="True" className='w-5 h-5' />
                                 I Know
                             </button>
