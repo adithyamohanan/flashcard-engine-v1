@@ -7,13 +7,39 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { AnimatePresence, motion } from 'framer-motion';
 
-function FlashCard() {
+function FlashCard({ setDashboardData }) {
     useEffect(() => {
         AOS.init({
             duration: 1000,
             once: true,
         });
     }, []);
+
+    useEffect(() => {
+        const today = new Date().toISOString().split('T')[0];
+        const lastDate = localStorage.getItem('lastActiveDate');
+        const streak = parseInt(localStorage.getItem('streak') || '0', 10);
+
+        if (!lastDate) {
+            localStorage.setItem('lastActiveDate', today);
+            localStorage.setItem('streak', '1');
+        } else if (lastDate !== today) {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yesterdayISO = yesterday.toISOString().split('T')[0];
+
+            if (lastDate === yesterdayISO) {
+                // Continued streak
+                localStorage.setItem('streak', (streak + 1).toString());
+            } else {
+                // Missed a day
+                localStorage.setItem('streak', '1');
+            }
+
+            localStorage.setItem('lastActiveDate', today);
+        }
+    }, []);
+
 
     const colors = [
         "bg-red-200",
@@ -26,7 +52,7 @@ function FlashCard() {
         "bg-teal-200",
     ];
 
-    
+
     const getInitialCards = () => {
         const saved = localStorage.getItem('flashcards');
         if (saved) {
@@ -75,16 +101,23 @@ function FlashCard() {
     const [cards, setCards] = useState(getInitialCards);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [isFlipped, setIsFlipped] = useState(false);
-    const [cardKey, setCardKey] = useState(0); 
+    const [cardKey, setCardKey] = useState(0);
 
     const todayISO = new Date().toISOString().split('T')[0];
 
-    
+    const masteredCards = cards.filter(card => {
+        const reviewDate = new Date(card.nextReview);
+        const today = new Date();
+        const diffInDays = (reviewDate - today) / (1000 * 60 * 60 * 24);
+        return diffInDays >= 5;
+    });
+
+
     const dueCards = cards
         .filter(card => (card.nextReview ? card.nextReview : '1970-01-01') <= todayISO)
         .slice(0, 5);
 
-    
+
     useEffect(() => {
         if (currentIndex >= dueCards.length) {
             setCurrentIndex(0);
@@ -95,13 +128,22 @@ function FlashCard() {
         localStorage.setItem('flashcards', JSON.stringify(cards));
     }, [cards]);
 
+    useEffect(() => {
+        setDashboardData({
+            cardsDueToday: dueCards.length,
+            cardsMastered: masteredCards.length,
+            streak: parseInt(localStorage.getItem('streak') || '1', 10),
+        });
+    }, [dueCards.length, masteredCards.length]);
+    
+
     const addDays = (dateStr, days) => {
         const date = new Date(dateStr);
         date.setDate(date.getDate() + days);
         return date.toISOString().split('T')[0];
     };
 
-    
+
     const handleAnswer = (known) => {
         if (dueCards.length === 0) return;
 
@@ -112,7 +154,7 @@ function FlashCard() {
         updatedCards[cardGlobalIndex].nextReview = known ? addDays(todayISO, 5) : addDays(todayISO, 1);
         setIsFlipped(false);
 
-        setCardKey(prev => prev + 1); 
+        setCardKey(prev => prev + 1);
         setTimeout(() => {
             setCards(updatedCards);
             const newDueCards = updatedCards
@@ -129,6 +171,8 @@ function FlashCard() {
         setCards(getInitialCards());
         setCurrentIndex(0);
     };
+
+    
 
     if (dueCards.length === 0) {
         return (
@@ -152,7 +196,15 @@ function FlashCard() {
         );
     }
 
+    
+
     const currentCard = dueCards[currentIndex];
+
+    
+
+
+
+
 
     return (
         <>
@@ -165,7 +217,7 @@ function FlashCard() {
 
             <div className='w-[80%] mx-auto my-6'>
                 <div className="grid grid-cols-2 gap-2">
-                    
+
                     <div data-aos="fade-right" className="col-span-1">
                         <div
                             className="flip-card w-full h-60"
@@ -202,7 +254,7 @@ function FlashCard() {
                     </div>
 
 
-                    
+
                     <div data-aos="fade-left" className="col-span-1">
                         <div className="curve-container mx-auto">
                             <svg className='mx-auto' id='svg2' width="200" height="600">
@@ -221,13 +273,13 @@ function FlashCard() {
                                                 key={card.question}
                                                 className={`card1 ${colors[idx % colors.length]} flex flex-col items-start justify-start pt-5 rounded-xl shadow-lg text-black text-left my-7`}
                                             >
-                                                
+
                                                 <p className="text-sm  font-semibold mb-5 break-words">{card.question}</p>
-                                                
+
                                             </div>
                                         );
                                     } else {
-                                        
+
                                         return (
                                             <div
                                                 key={`placeholder-${idx}`}
@@ -249,3 +301,4 @@ function FlashCard() {
 }
 
 export default FlashCard;
+

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Line } from 'react-chartjs-2';
 import {
   Chart as ChartJS,
@@ -8,9 +8,8 @@ import {
   LineElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 } from 'chart.js';
-
 
 ChartJS.register(
   CategoryScale,
@@ -23,13 +22,24 @@ ChartJS.register(
 );
 
 const LineChart = () => {
-  
+  const [studyData, setStudyData] = useState([0, 0, 0, 0, 0, 0, 0]); 
+
+  useEffect(() => {
+    
+    const fetchData = () => {
+      const dataFromAPI = [5, 10, 8, 12, 7, 15, 9];
+      setStudyData(dataFromAPI);
+    };
+
+    fetchData();
+  }, []);
+
   const data = {
     labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
     datasets: [
       {
         label: 'Cards Studied',
-        data: [5, 10, 8, 12, 7, 15, 9],
+        data: studyData, // <-- dynamic data from state
         fill: false,
         borderColor: 'rgba(75,192,192,1)',
         backgroundColor: 'rgba(75,192,192,0.4)',
@@ -38,14 +48,13 @@ const LineChart = () => {
     ],
   };
 
-  
   const options = {
     responsive: true,
     plugins: {
       legend: {
         position: 'top',
         labels: {
-          color: 'white',  
+          color: 'white',
         },
       },
       title: {

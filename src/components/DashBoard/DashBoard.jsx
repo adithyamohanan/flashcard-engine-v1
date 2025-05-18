@@ -17,7 +17,9 @@ import {
 } from "lucide-react";
 
 
-function DashBoard() {
+function DashBoard({ dashboardData }) {
+
+    const { cardsDueToday, cardsMastered} = dashboardData;
 
     const [totalCards, setTotalCards] = useState(0);
 
@@ -82,7 +84,7 @@ function DashBoard() {
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <Clock className="text-white w-8 h-8 hover:scale-105 transition-transform" />
                             <p className="text-white text-center text-lg font-medium">Cards Due Today</p>
-                            <p className="text-white text-6xl font-bold">5</p>
+                            <p className="text-white text-6xl font-bold">{cardsDueToday}</p>
                         </div>
                     </div>
 
@@ -91,7 +93,7 @@ function DashBoard() {
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <CheckCircle className="text-white w-8 h-8 hover:scale-105 transition-transform" />
                             <p className="text-white text-center text-lg font-medium">Cards Mastered</p>
-                            <p className="text-white text-6xl font-bold">28</p>
+                            <p className="text-white text-6xl font-bold">{cardsMastered}</p>
                         </div>
                     </div>
 
@@ -100,7 +102,7 @@ function DashBoard() {
                         <div className="w-full h-60 dashcard flex flex-col justify-center items-center gap-4">
                             <Flame className="text-white w-8 h-8 hover:scale-105 transition-transform" />
                             <p className="text-white text-center text-lg font-medium">Days Streak</p>
-                            <p className="text-white text-6xl font-bold">12</p>
+                            <p className="text-white text-6xl font-bold">{dashboardData.streak}</p>
                         </div>
                     </div>
 
