@@ -2,6 +2,7 @@ import './Hero.css';
 import Logo from '../../assets/FlashFlow.png';
 import Arrow from '../../assets/arrow.png';
 import Idea from '../../assets/idea.png';
+import { Link } from 'react-scroll';
 
 function Hero() {
     const scrollToSection = () => {
@@ -26,6 +27,7 @@ function Hero() {
 
                     
                     <div className="scroll-circle cursor-pointer" onClick={scrollToSection}>
+                        <Link to='flash-v1' smooth={true} duration={500}>
                         <svg className='svg1' viewBox="0 0 100 100">
                             <defs>
                                 <path
@@ -39,7 +41,8 @@ function Hero() {
                                 </textPath>
                             </text>
                         </svg>
-                        <div className="center-icon">↓</div>
+                        </Link>
+                        <div className="center-icon"><Link to='flash-v1' smooth={true} duration={500}>↓</Link></div>
                     </div>
                 </div>
 

@@ -17,8 +17,8 @@ function DashBoard() {
 
     return (
         <>
-            <div className="w-[80%] mx-auto my-6">
-                <h1 className="text-white text-center text-5xl font-extrabold">Track Your Progress</h1>
+            <div className="w-[80%] mx-auto my-6" id='dashboard'>
+                <h1 className="text-white text-center text-5xl font-extrabold" id='dashboard'>Track Your Progress</h1>
                 <img src={Line} alt="Line" className="w-70 h-auto mx-auto" />
             </div>
 
