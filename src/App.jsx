@@ -40,6 +40,7 @@ function App() {
           }
         />
          <Route path="/dashboard" element={<DashBoard dashboardData={dashboardData} />} />
+         <Route path="/hero" element={<Hero />} />
       </Routes>
     </Router>
   );
