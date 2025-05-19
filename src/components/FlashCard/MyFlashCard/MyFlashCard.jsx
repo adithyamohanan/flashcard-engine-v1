@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../MyFlashCard/MyFlashCard.css';
+import { Link } from 'react-router-dom';
 
 const COLORS = [
   'bg-blue-200',
@@ -157,9 +158,12 @@ function MyFlashCard() {
         <h1 className="text-3xl font-extrabold mb-6 tracking-wide">FlashFlow</h1>
         <hr className="border-white/20 mb-6" />
         <nav className="space-y-5 text-lg">
-          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
+         <Link
+            to="/dashboard"
+            className="block px-5 py-2 rounded-lg hover:bg-white/20 transition"
+          >
             Dashboard
-          </a>
+          </Link>
           <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
             Profile
           </a>
