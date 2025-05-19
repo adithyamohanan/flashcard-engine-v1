@@ -259,7 +259,7 @@ function MyFlashCard() {
                 <h3 className="text-2xl font-bold mb-5 text-center">{card.title}</h3>
                 <div className="space-y-4 text-center">
                   <p className="font-semibold text-lg leading-snug">Q: {card.question}</p>
-                  <p className="text-base leading-relaxed opacity-90">{card.answer}</p>
+                  <p className="text-2xl leading-relaxed opacity-90">{card.answer}</p>
                 </div>
               </div>
             );
