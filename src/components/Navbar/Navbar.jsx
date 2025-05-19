@@ -1,6 +1,6 @@
 import './Navbar.css';
 import Icon from '../../assets/icon-logo.png';
-import Boy from '../../assets/Boy.png';
+import Boy from '../../assets/boy.png';
 import { Link } from 'react-router-dom'; 
 
 import React, { useState, useEffect } from 'react';
