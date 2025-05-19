@@ -39,6 +39,7 @@ function App() {
             </>
           }
         />
+         <Route path="/dashboard" element={<DashBoard dashboardData={dashboardData} />} />
       </Routes>
     </Router>
   );
