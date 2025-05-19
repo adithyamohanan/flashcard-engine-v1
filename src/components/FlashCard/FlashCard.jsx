@@ -1,307 +1,253 @@
-import Line from '../../assets/line.png';
-import './FlashCard.css';
-import Cancel from '../../assets/cancel.png';
-import CheckMark from '../../assets/check-mark.png';
 import React, { useState, useEffect } from 'react';
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-import { AnimatePresence, motion } from 'framer-motion';
+import '../MyFlashCard/MyFlashCard.css';
 
-function FlashCard({ setDashboardData }) {
-    useEffect(() => {
-        AOS.init({
-            duration: 1000,
-            once: true,
-        });
-    }, []);
-
-    useEffect(() => {
-        const today = new Date().toISOString().split('T')[0];
-        const lastDate = localStorage.getItem('lastActiveDate');
-        const streak = parseInt(localStorage.getItem('streak') || '0', 10);
-
-        if (!lastDate) {
-            localStorage.setItem('lastActiveDate', today);
-            localStorage.setItem('streak', '1');
-        } else if (lastDate !== today) {
-            const yesterday = new Date();
-            yesterday.setDate(yesterday.getDate() - 1);
-            const yesterdayISO = yesterday.toISOString().split('T')[0];
-
-            if (lastDate === yesterdayISO) {
-                // Continued streak
-                localStorage.setItem('streak', (streak + 1).toString());
-            } else {
-                // Missed a day
-                localStorage.setItem('streak', '1');
-            }
-
-            localStorage.setItem('lastActiveDate', today);
-        }
-    }, []);
+const COLORS = [
+  'bg-blue-200',
+  'bg-green-200',
+  'bg-red-200',
+  'bg-yellow-200',
+  'bg-purple-200',
+  'bg-pink-200',
+];
 
 
-    const colors = [
-        "bg-red-200",
-        "bg-green-200",
-        "bg-yellow-200",
-        "bg-blue-200",
-        "bg-purple-200",
-        "bg-pink-200",
-        "bg-orange-200",
-        "bg-teal-200",
-    ];
+function MyFlashCard() {
+  
+  const [cards, setCards] = useState([
+    {
+      question: 'What is space retention in dentistry?',
+      answer: 'It refers to preserving the space left by a lost tooth to prevent shifting of adjacent teeth.',
+      title: 'Space Retention',
+    },
+    {
+      question: 'What is dental caries?',
+      answer: 'Dental caries is tooth decay caused by bacterial infection leading to cavities.',
+      title: 'Dental Caries',
+    },
+    {
+      question: 'What is enamel?',
+      answer: 'Enamel is the hard, outer surface layer of the tooth that protects against decay.',
+      title: 'Enamel',
+    },
+    {
+      question: 'What is gingivitis?',
+      answer: 'Gingivitis is inflammation of the gums caused by plaque buildup.',
+      title: 'Gingivitis',
+    },
+    {
+      question: 'What is periodontal disease?',
+      answer: 'A serious gum infection that damages gums and can destroy the jawbone.',
+      title: 'Periodontal Disease',
+    },
+    {
+      question: 'What is a root canal treatment?',
+      answer: 'A procedure to remove infected pulp from inside a tooth and seal it.',
+      title: 'Root Canal',
+    },
+    {
+      question: 'What is plaque?',
+      answer: 'A sticky film of bacteria that forms on teeth and gums.',
+      title: 'Plaque',
+    },
+    {
+      question: 'What is tartar?',
+      answer: 'Hardened plaque that has been left on the teeth and can only be removed by a dentist.',
+      title: 'Tartar',
+    },
+    {
+      question: 'What is dental prophylaxis?',
+      answer: 'A professional cleaning procedure to remove plaque and tartar from teeth.',
+      title: 'Dental Prophylaxis',
+    },
+    {
+      question: 'What is occlusion in dentistry?',
+      answer: 'Occlusion refers to the contact between upper and lower teeth when the jaws bite together.',
+      title: 'Occlusion',
+    },
+    {
+      question: 'What is an impacted tooth?',
+      answer: 'A tooth that has failed to erupt properly through the gums.',
+      title: 'Impacted Tooth',
+    },
+    {
+      question: 'What is dental implant?',
+      answer: 'A surgical component that interfaces with the bone to support a dental prosthesis.',
+      title: 'Dental Implant',
+    },
+    {
+      question: 'What is fluorosis?',
+      answer: 'A condition caused by excessive fluoride intake leading to tooth enamel discoloration.',
+      title: 'Fluorosis',
+    },
+    {
+      question: 'What is bruxism?',
+      answer: 'The involuntary grinding or clenching of teeth, often during sleep.',
+      title: 'Bruxism',
+    },
+    {
+      question: 'What is xerostomia?',
+      answer: 'A condition characterized by dry mouth due to reduced saliva production.',
+      title: 'Xerostomia',
+    },
+    {
+      question: 'What is a dental crown?',
+      answer: 'A cap placed over a damaged tooth to restore its shape and function.',
+      title: 'Dental Crown',
+    },
+    {
+      question: 'What is a dental bridge?',
+      answer: 'A fixed dental restoration used to replace one or more missing teeth by joining an artificial tooth to adjacent teeth.',
+      title: 'Dental Bridge',
+    },
+    {
+      question: 'What is malocclusion?',
+      answer: 'Misalignment or incorrect relation between the teeth of the two dental arches.',
+      title: 'Malocclusion',
+    },
+    {
+      question: 'What is dentin?',
+      answer: 'The layer of tooth beneath the enamel that contains microscopic tubules.',
+      title: 'Dentin',
+    },
+    {
+      question: 'What is orthodontics?',
+      answer: 'A branch of dentistry dealing with the correction of teeth and jaws that are positioned improperly.',
+      title: 'Orthodontics',
+    },
+  ]);
 
+  const [adding, setAdding] = useState(false);
+  const [newQuestion, setNewQuestion] = useState('');
+  const [newAnswer, setNewAnswer] = useState('');
+  const [newTitle, setNewTitle] = useState('');
 
-    const getInitialCards = () => {
-        const saved = localStorage.getItem('flashcards');
-        if (saved) {
-            return JSON.parse(saved);
-        }
-        const today = new Date();
-        const dummyData = [
-            { question: "What is the capital of France?", answer: "Paris" },
-            { question: "Who wrote 'Romeo and Juliet'?", answer: "William Shakespeare" },
-            { question: "What is the largest planet in our solar system?", answer: "Jupiter" },
-            { question: "What is the chemical symbol for water?", answer: "H2O" },
-            { question: "Who painted the Mona Lisa?", answer: "Leonardo da Vinci" },
-            { question: "What is the square root of 64?", answer: "8" },
-            { question: "What is the fastest land animal?", answer: "Cheetah" },
-            { question: "Who discovered penicillin?", answer: "Alexander Fleming" },
-            { question: "What is the longest river in the world?", answer: "Nile" },
-            { question: "Which planet is known as the Red Planet?", answer: "Mars" },
-            { question: "Who is known as the father of computers?", answer: "Charles Babbage" },
-            { question: "What is the currency of Japan?", answer: "Yen" },
-            { question: "What is the hardest natural substance?", answer: "Diamond" },
-            { question: "Who invented the telephone?", answer: "Alexander Graham Bell" },
-            { question: "What is the tallest mountain in the world?", answer: "Mount Everest" },
-            { question: "Which country gifted the Statue of Liberty to the USA?", answer: "France" },
-            { question: "What is the main language spoken in Brazil?", answer: "Portuguese" },
-            { question: "Who wrote '1984'?", answer: "George Orwell" },
-            { question: "What is the boiling point of water in Celsius?", answer: "100" },
-            { question: "What is the smallest prime number?", answer: "2" },
-            { question: "Who painted the ceiling of the Sistine Chapel?", answer: "Michelangelo" },
-            { question: "What is the chemical symbol for gold?", answer: "Au" },
-            { question: "How many continents are there?", answer: "7" },
-            { question: "Who developed the theory of relativity?", answer: "Albert Einstein" },
-            { question: "What is the hardest rock?", answer: "Diamond" }
-        ];
-        return dummyData.map((item, i) => {
-            const dayOffset = Math.floor(i / 4);
-            const reviewDate = new Date(today);
-            reviewDate.setDate(today.getDate() + dayOffset);
-            return {
-                question: item.question,
-                answer: item.answer,
-                nextReview: reviewDate.toISOString().split('T')[0],
-            };
-        });
-    };
-
-    const [cards, setCards] = useState(getInitialCards);
-    const [currentIndex, setCurrentIndex] = useState(0);
-    const [isFlipped, setIsFlipped] = useState(false);
-    const [cardKey, setCardKey] = useState(0);
-
-    const todayISO = new Date().toISOString().split('T')[0];
-
-    const masteredCards = cards.filter(card => {
-        const reviewDate = new Date(card.nextReview);
-        const today = new Date();
-        const diffInDays = (reviewDate - today) / (1000 * 60 * 60 * 24);
-        return diffInDays >= 5;
-    });
-
-
-    const dueCards = cards
-        .filter(card => (card.nextReview ? card.nextReview : '1970-01-01') <= todayISO)
-        .slice(0, 5);
-
-
-    useEffect(() => {
-        if (currentIndex >= dueCards.length) {
-            setCurrentIndex(0);
-        }
-    }, [dueCards.length, currentIndex]);
-
-    useEffect(() => {
-        localStorage.setItem('flashcards', JSON.stringify(cards));
-    }, [cards]);
-
-    useEffect(() => {
-        const progressPercentage = Math.round((masteredCards.length / cards.length) * 100);
-        setDashboardData({
-
-            cardsDueToday: dueCards.length,
-            cardsMastered: masteredCards.length,
-            streak: parseInt(localStorage.getItem('streak') || '1', 10),
-            progress: progressPercentage,
-        });
-    }, [dueCards.length, masteredCards.length]);
-
-
-    const addDays = (dateStr, days) => {
-        const date = new Date(dateStr);
-        date.setDate(date.getDate() + days);
-        return date.toISOString().split('T')[0];
-    };
-
-
-    const handleAnswer = (known) => {
-        if (dueCards.length === 0) return;
-
-        const cardToUpdate = dueCards[currentIndex];
-        const cardGlobalIndex = cards.findIndex(c => c.question === cardToUpdate.question);
-
-        const updatedCards = [...cards];
-        updatedCards[cardGlobalIndex].nextReview = known ? addDays(todayISO, 5) : addDays(todayISO, 1);
-        setIsFlipped(false);
-
-        setCardKey(prev => prev + 1);
-        setTimeout(() => {
-            setCards(updatedCards);
-            const newDueCards = updatedCards
-                .filter(card => (card.nextReview ? card.nextReview : '1970-01-01') <= todayISO)
-                .slice(0, 5);
-            if (currentIndex >= newDueCards.length) {
-                setCurrentIndex(0);
-            }
-        }, 400);
-    };
-
-    const handleReset = () => {
-        localStorage.removeItem('flashcards');
-        setCards(getInitialCards());
-        setCurrentIndex(0);
-    };
-
-    
-
-    if (dueCards.length === 0) {
-        return (
-            <div data-aos="fade-up" className="flex items-center justify-center min-h-screen px-4">
-                <div className="bg-fuchsia-800 text-white rounded-xl shadow-lg p-10 max-w-xl w-full text-center">
-                    <h1 className="text-3xl font-bold mb-4">🎉 Congratulations!</h1>
-                    <p className="text-xl mb-2">You’ve completed today’s flashcards.</p>
-                    <p className="text-lg mb-2">✅ All your reviews for today are done.</p>
-                    <p className="text-md text-gray-300 mb-8">🕑 You can come back later or tomorrow for more practice.</p>
-                    <button
-                        onClick={handleReset}
-                        className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-full text-lg font-medium transition duration-300"
-                    >
-                        🔁 Reset Progress
-                    </button>
-                    <p className="text-sm text-red-300 mt-4">
-                        ⚠️ This will clear all progress and restore default cards.
-                    </p>
-                </div>
-            </div>
-        );
+  
+  useEffect(() => {
+    const storedCards = localStorage.getItem('flashcards');
+    if (storedCards) {
+      setCards(JSON.parse(storedCards));
     }
+  }, []);
 
-    
+  
+  useEffect(() => {
+    localStorage.setItem('flashcards', JSON.stringify(cards));
+  }, [cards]);
 
-    const currentCard = dueCards[currentIndex];
+  const handleAddCard = () => {
+    if (!newQuestion.trim() || !newAnswer.trim() || !newTitle.trim()) return;
 
-    
+    const newCard = {
+      title: newTitle.trim(),
+      question: newQuestion.trim(),
+      answer: newAnswer.trim(),
+    };
 
+    setCards([...cards, newCard]);
+    setAdding(false);
+    setNewQuestion('');
+    setNewAnswer('');
+    setNewTitle('');
+  };
 
+  return (
+    <div className="h-screen flex" style={{ backgroundColor: '#211853' }}>
+  
+      <aside className="w-64 bg-white/10 backdrop-blur-md shadow-lg p-6 flex flex-col text-white">
+        <h1 className="text-3xl font-extrabold mb-6 tracking-wide">FlashFlow</h1>
+        <hr className="border-white/20 mb-6" />
+        <nav className="space-y-5 text-lg">
+          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
+            Dashboard
+          </a>
+          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
+            Profile
+          </a>
+          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
+            Logout
+          </a>
+        </nav>
+      </aside>
 
+      
+      <main className="flex-1 p-10 overflow-y-auto text-white">
+        <h2 className="text-4xl font-semibold mb-3 tracking-wide">My FlashCards</h2>
 
+        <p className="text-white/70 mb-6 max-w-xl">
+          Below are all your saved flashcards. You can view, edit, or delete them. Click on any card to see more details.
+        </p>
 
-    return (
-        <>
-            <div data-aos="fade-up" id='flash-v1' className="w-[80%] mx-auto my-6">
-                <h1 className="text-white text-center text-5xl font-extrabold">Today's Review</h1>
-                <img src={Line} alt="Line" className="w-70 h-auto mx-auto" />
-                <p className='text-white font-serif text-3xl mb-3'>Hi, Adithya</p>
-                <p className="text-white text-lg font-semibold">Flip the card to see the answer</p>
+        <hr className="border-white/20 mb-8 w-full" />
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+          
+          {!adding ? (
+            <div
+              className="border-2 border-dashed border-white/30 rounded-3xl shadow-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition duration-300 ease-in-out"
+              onClick={() => setAdding(true)}
+            >
+              <span className="text-6xl font-bold mb-2 select-none">＋</span>
+              <span className="text-lg font-medium select-none">Add New Card</span>
             </div>
+          ) : (
+            <div className="bg-white/10 border border-white/40 rounded-3xl shadow-lg aspect-square p-8 flex flex-col justify-between">
+              <input
+                type="text"
+                placeholder="Card Title"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+                className="mb-5 p-3 rounded-lg bg-white text-black font-semibold placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              />
+              <textarea
+                placeholder="Type your question..."
+                value={newQuestion}
+                onChange={(e) => setNewQuestion(e.target.value)}
+                className="mb-5 p-3 rounded-lg bg-white text-black resize-none h-20 font-medium placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              />
+              <textarea
+                placeholder="Type your answer..."
+                value={newAnswer}
+                onChange={(e) => setNewAnswer(e.target.value)}
+                className="mb-8 p-3 rounded-lg bg-white text-black resize-none h-28 font-medium placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition"
+              />
+              <div className="flex justify-between">
+                <button
+                  onClick={handleAddCard}
+                  className="bg-indigo-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-indigo-700 transition"
+                >
+                  Save
+                </button>
+                <button
+                  onClick={() => setAdding(false)}
+                  className="bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold hover:bg-gray-700 transition"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          )}
 
-            <div className='w-[80%] mx-auto my-6'>
-                <div className="grid grid-cols-2 gap-2">
-
-                    <div data-aos="fade-right" className="col-span-1">
-                        <div
-                            className="flip-card w-full h-60"
-                            onClick={() => setIsFlipped(!isFlipped)}
-                            style={{ cursor: "pointer" }}
-                        >
-                            <div className={`flip-card-inner ${isFlipped ? 'flipped' : ''}`}>
-                                <div className="flip-card-front bg-orange-200 relative">
-                                    <span className="absolute top-4 left-4 inline-block w-3 h-3 bg-green-500 rounded-full animate-ping"></span>
-                                    <p className="text-black font-semibold text-xl">{currentCard.question}</p>
-                                </div>
-                                <div className="flip-card-back bg-blue-200">
-                                    <p className="text-black font-semibold text-4xl">{currentCard.answer}</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className='mx-auto flex flex-row gap-4 mt-10'>
-                            <button
-                                className="mx-auto flex items-center gap-2 w-40 h-12 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 shadow-md"
-                                onClick={() => handleAnswer(false)}
-                            >
-                                <img src={Cancel} alt="False" className='w-5 h-5' />
-                                I Don't Know
-                            </button>
-                            <button
-                                className="mx-auto flex items-center gap-5 w-40 h-12 bg-white/20 backdrop-blur-md text-white px-4 py-2 rounded-xl border border-white/20 shadow-md"
-                                onClick={() => handleAnswer(true)}
-                            >
-                                <img src={CheckMark} alt="True" className='w-5 h-5' />
-                                I Know
-                            </button>
-                        </div>
-                    </div>
-
-
-
-                    <div data-aos="fade-left" className="col-span-1">
-                        <div className="curve-container mx-auto">
-                            <svg className='mx-auto' id='svg2' width="200" height="600">
-                                <path d="M 100 0 
-                                         C 50 100, 150 200, 100 300 
-                                         C 50 400, 150 500, 100 390"
-                                    stroke="#f74ac9" fill="transparent" strokeWidth="4" />
-                            </svg>
-                            {
-                                Array.from({ length: 4 }).map((_, idx) => {
-                                    const otherCards = dueCards.filter((_, i) => i !== currentIndex);
-                                    const card = otherCards[idx];
-                                    if (card) {
-                                        return (
-                                            <div
-                                                key={card.question}
-                                                className={`card1 ${colors[idx % colors.length]} flex flex-col items-start justify-start pt-5 rounded-xl shadow-lg text-black text-left my-7`}
-                                            >
-
-                                                <p className="text-sm  font-semibold mb-5 break-words">{card.question}</p>
-
-                                            </div>
-                                        );
-                                    } else {
-
-                                        return (
-                                            <div
-                                                key={`placeholder-${idx}`}
-                                                className="card1 bg-gray-100 flex flex-col items-center justify-center pt-5 rounded-xl shadow-lg text-gray-400 text-center my-7 border border-dashed border-gray-300"
-                                            >
-                                                <div className="w-2 h-2 bg-gray-300 rounded-full animate-pulse"></div>
-                                                <p className="text-xs font-semibold mb-1">No more cards</p>
-                                            </div>
-                                        );
-                                    }
-                                })
-                            }
-                        </div>
-                    </div>
+          
+          {cards.map((card, idx) => {
+            const colorClass = COLORS[idx % COLORS.length];
+            return (
+              <div
+                key={idx}
+                className={`${colorClass} text-black p-8 rounded-3xl shadow-xl aspect-square flex flex-col justify-center hover:scale-[1.03] transition-transform duration-300 cursor-pointer`}
+                title={card.title}
+              >
+                <h3 className="text-2xl font-bold mb-5 text-center">{card.title}</h3>
+                <div className="space-y-4 text-center">
+                  <p className="font-semibold text-lg leading-snug">Q: {card.question}</p>
+                  <p className="text-base leading-relaxed opacity-90">{card.answer}</p>
                 </div>
-            </div>
-        </>
-    );
+              </div>
+            );
+          })}
+        </div>
+      </main>
+    </div>
+  );
 }
 
-export default FlashCard;
-
+export default MyFlashCard;
