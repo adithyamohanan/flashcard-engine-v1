@@ -11,6 +11,14 @@ const COLORS = [
   'bg-pink-200',
 ];
 
+const PING_COLORS = [
+  'bg-blue-500',
+  'bg-green-500',
+  'bg-red-500',
+  'bg-yellow-500',
+  'bg-purple-500',
+  'bg-pink-500',
+];
 
 function MyFlashCard() {
   
@@ -240,12 +248,14 @@ function MyFlashCard() {
           
           {cards.map((card, idx) => {
             const colorClass = COLORS[idx % COLORS.length];
+            const pingColorClass = PING_COLORS[idx % PING_COLORS.length];
             return (
               <div
                 key={idx}
-                className={`${colorClass} text-black p-8 rounded-3xl shadow-xl aspect-square flex flex-col justify-center hover:scale-[1.03] transition-transform duration-300 cursor-pointer`}
+                className={`${colorClass} text-black p-8 rounded-3xl shadow-xl aspect-square flex flex-col justify-center hover:scale-[1.03] transition-transform duration-300 cursor-pointer relative`}
                 title={card.title}
               >
+                <span className={`absolute top-4 left-4 inline-block w-3 h-3 ${pingColorClass} rounded-full`}></span>
                 <h3 className="text-2xl font-bold mb-5 text-center">{card.title}</h3>
                 <div className="space-y-4 text-center">
                   <p className="font-semibold text-lg leading-snug">Q: {card.question}</p>
@@ -261,3 +271,4 @@ function MyFlashCard() {
 }
 
 export default MyFlashCard;
+
