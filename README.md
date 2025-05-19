@@ -64,7 +64,7 @@ Mon | ███████▒▒▒▒
 
 ## 🛠️ Tech Stack
 
-- **Frontend**: React.js + Next.js
+- **Frontend**: React.js + JavaScript
 - **Styling**: Tailwind CSS
 - **Hosting**: Vercel
 - *(Add backend or database info here if applicable)*
@@ -75,7 +75,7 @@ Mon | ███████▒▒▒▒
 
 ```bash
 # Clone the repository
-git clone 
+git clone https://github.com/adithyamohanan/flashflow-flashcard-engine-v1.git
 
 # Navigate into the project directory
 cd flashflow
