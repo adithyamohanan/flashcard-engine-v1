@@ -121,7 +121,7 @@ function MyFlashCard() {
   const [newAnswer, setNewAnswer] = useState('');
   const [newTitle, setNewTitle] = useState('');
 
-  // Load cards from localStorage on mount
+  
   useEffect(() => {
     const storedCards = localStorage.getItem('flashcards');
     if (storedCards) {
@@ -129,7 +129,7 @@ function MyFlashCard() {
     }
   }, []);
 
-  // Save cards to localStorage when cards change
+  
   useEffect(() => {
     localStorage.setItem('flashcards', JSON.stringify(cards));
   }, [cards]);
@@ -152,7 +152,7 @@ function MyFlashCard() {
 
   return (
     <div className="h-screen flex" style={{ backgroundColor: '#211853' }}>
-      {/* Sidebar */}
+  
       <aside className="w-64 bg-white/10 backdrop-blur-md shadow-lg p-6 flex flex-col text-white">
         <h1 className="text-3xl font-extrabold mb-6 tracking-wide">FlashFlow</h1>
         <hr className="border-white/20 mb-6" />
@@ -169,7 +169,7 @@ function MyFlashCard() {
         </nav>
       </aside>
 
-      {/* Main content */}
+      
       <main className="flex-1 p-10 overflow-y-auto text-white">
         <h2 className="text-4xl font-semibold mb-3 tracking-wide">My FlashCards</h2>
 
@@ -180,7 +180,7 @@ function MyFlashCard() {
         <hr className="border-white/20 mb-8 w-full" />
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {/* Add New Card or Input Form */}
+          
           {!adding ? (
             <div
               className="border-2 border-dashed border-white/30 rounded-3xl shadow-lg aspect-square flex flex-col items-center justify-center cursor-pointer hover:bg-white/20 transition duration-300 ease-in-out"
@@ -227,7 +227,7 @@ function MyFlashCard() {
             </div>
           )}
 
-          {/* Existing Cards with solid blue backgrounds */}
+          
           {cards.map((card, idx) => {
             const colorClass = COLORS[idx % COLORS.length];
             return (
