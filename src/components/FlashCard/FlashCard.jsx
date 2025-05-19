@@ -1,4 +1,4 @@
-import Line from '../../assets/Line.png';
+import Line from '../../assets/line.png';
 import './FlashCard.css';
 import Cancel from '../../assets/cancel.png';
 import CheckMark from '../../assets/check-mark.png';
