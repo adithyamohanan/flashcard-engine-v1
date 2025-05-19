@@ -164,11 +164,14 @@ function MyFlashCard() {
           >
             Dashboard
           </Link>
-          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
-            Profile
-          </a>
          <Link
-            to="/app"
+            to="/"
+            className="block px-5 py-2 rounded-lg hover:bg-white/20 transition"
+          >
+            Profile
+          </Link>
+         <Link
+            to="/"
             className="block px-5 py-2 rounded-lg hover:bg-white/20 transition"
           >
             Logout
