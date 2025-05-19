@@ -64,7 +64,7 @@ function DashBoard({ dashboardData }) {
                     <div className="col-span-1">
                         <div className="w-full h-60 dashcard flex items-center justify-center gap-10">
                             <p className='text-white'>My Progress</p>
-                            <DoughnutChart />
+                            <DoughnutChart streak={dashboardData.progress} total={25} />
                         </div>
                     </div>
 

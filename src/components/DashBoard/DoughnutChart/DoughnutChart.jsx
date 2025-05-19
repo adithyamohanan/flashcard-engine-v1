@@ -4,11 +4,13 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const DoughnutChart = () => {
+const DoughnutChart = ({ streak, total }) => {
+  const percentage = Math.round((streak / total) * 100);
+
   const data = {
     datasets: [
       {
-        data: [75, 25],
+        data: [streak, total - streak],
         backgroundColor: ['#49b8ba', '#e0e0e0'],
         borderWidth: 0,
       },
@@ -16,7 +18,7 @@ const DoughnutChart = () => {
   };
 
   const options = {
-    cutout: '80%', 
+    cutout: '80%',
     plugins: {
       tooltip: { enabled: false },
       legend: { display: false },
@@ -37,7 +39,7 @@ const DoughnutChart = () => {
           color: '#fff',
         }}
       >
-        75%
+        {percentage}%
       </div>
     </div>
   );

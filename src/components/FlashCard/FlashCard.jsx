@@ -129,13 +129,16 @@ function FlashCard({ setDashboardData }) {
     }, [cards]);
 
     useEffect(() => {
+        const progressPercentage = Math.round((masteredCards.length / cards.length) * 100);
         setDashboardData({
+
             cardsDueToday: dueCards.length,
             cardsMastered: masteredCards.length,
             streak: parseInt(localStorage.getItem('streak') || '1', 10),
+            progress: progressPercentage,
         });
     }, [dueCards.length, masteredCards.length]);
-    
+
 
     const addDays = (dateStr, days) => {
         const date = new Date(dateStr);
