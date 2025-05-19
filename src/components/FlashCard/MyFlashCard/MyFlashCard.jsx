@@ -167,9 +167,12 @@ function MyFlashCard() {
           <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
             Profile
           </a>
-          <a href="#" className="block px-5 py-2 rounded-lg hover:bg-white/20 transition">
+         <Link
+            to="/hero"
+            className="block px-5 py-2 rounded-lg hover:bg-white/20 transition"
+          >
             Logout
-          </a>
+          </Link>
         </nav>
       </aside>
 
