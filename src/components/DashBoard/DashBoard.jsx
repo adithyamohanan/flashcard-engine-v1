@@ -1,5 +1,5 @@
 import './DashBoard.css';
-import Line from '../../assets/Line.png';
+import Line from '../../assets/line.png';
 import DoughnutChart from './DoughnutChart/DoughnutChart';
 import LineChart from './LineChart/LineChart';
 import Trophy from '../../assets/trophy.png';
